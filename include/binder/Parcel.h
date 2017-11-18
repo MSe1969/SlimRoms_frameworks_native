@@ -39,6 +39,7 @@ class ProcessState;
 class String8;
 class TextOutput;
 
+typedef __u32 binder_size_t;
 struct flat_binder_object;  // defined in support_p/binder_module.h
 
 class Parcel {
@@ -234,6 +235,7 @@ private:
     void                freeDataNoInit();
     void                initState();
     void                scanForFds() const;
+    status_t            validateReadData(size_t len) const;
                         
     template<class T>
     status_t            readAligned(T *pArg) const;
@@ -252,6 +254,7 @@ private:
     size_t              mObjectsSize;
     size_t              mObjectsCapacity;
     mutable size_t      mNextObjectHint;
+    mutable bool        mObjectsSorted;
 
     mutable bool        mFdsKnown;
     mutable bool        mHasFds;
